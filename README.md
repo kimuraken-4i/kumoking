@@ -6,5 +6,7 @@ python3 -m venv .venv
 #activate the virtual environment  
 source .venv/bin/activate  
 #install required modules that listed in the file .txt  
-pip install -r requirements.txt  
+pip install -r requirements.txt
+#execute
+flask --app test-app run  
 ```
