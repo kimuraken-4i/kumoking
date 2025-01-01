@@ -7,7 +7,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 
 
-classes = ["線状の","粒々の","もくもくとした","ふわっとした","", ""]
+classes = ["線状の","粒々の","もくもくとした","ふわっとした","うろこ状の", "霧状の"]
 image_size = 200
 
 UPLOAD_FOLDER = "uploads"
