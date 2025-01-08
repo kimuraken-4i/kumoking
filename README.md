@@ -10,3 +10,10 @@ pip install -r requirements.txt
 #execute
 flask --app test-app run  
 ```
+
+やること：  
+クライアント  
+・見た目の修正  
+・雲とポケモンの画像表示  
+サーバー  
+・  
