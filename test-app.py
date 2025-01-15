@@ -7,7 +7,8 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 
 classes = ["線状の","粒々の","もくもくとした","ふわっとした","うろこ状の", "霧状の"]
-pokes = ["ドータクン", "マッギョ", "メタモン", "ピッピ", "プロトーガ", "レックウザ"]
+pokes = ["ピッピ", "ドータクン", "カラサリス", "トラパルト", "ヨワシ", "マッスグマ"]
+
 image_size = 200
 image_resize = 300
 
@@ -56,13 +57,15 @@ def upload_file():
             ans_per_poke = float(result_poke[predicted_poke])
 
             pred_answer = (
-            f"これは 【  {classes[predicted]} 雲 】 です"
+            f"これは 【  {classes[predicted]}雲 】 です"
             #"適合率は{accuracy_percentage:.2f}%です"
-            "一番似ているポケモンは 【{ pokes[predicted_poke]} 】です"
+            f"一番似ているポケモンは 【{pokes[predicted_poke]} 】です"
             #"適合率は{accuracy_percentage_poke:.2f}%です"
+            f"カレントディレクトリは 【{os.getcwd()} 】です"
             )
+            poke_image ="./uploads/images/"+f"{pokes[predicted_poke]}.png"
   
-        return render_template("test-index.html",answer=pred_answer)
+        return render_template("test-index.html",answer=pred_answer, image_path=poke_image)
 
     return render_template("test-index.html",answer="")
 
