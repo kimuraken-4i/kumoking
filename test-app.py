@@ -65,8 +65,11 @@ def upload_file():
             #f"カレントディレクトリは 【{os.getcwd()} 】です"
             )
             poke_image ="./static/images/"+f"{pokes[predicted_poke]}.png"
+            #どのポケモンか、デフォルト値も設定
+            poke_answer = pokes[predicted_poke] if predicted_poke < len(pokes) else "不明なポケモン"
+            print(poke_answer)
   
-        return render_template("test-index.html",cloud_answer=classes[predicted],poke_answer=pokes[predicted_poke], image_path=poke_image)
+        return render_template("test-index.html",answer=classes[predicted],poke_answer=poke_answer, image_path=poke_image)
 
     return render_template("test-index.html",answer="")
 

@@ -5,14 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CloudShape</title>
-    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
     <script>
+        const attributes=[
+            "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
+        ];
+        function judge(attribute){
+            //属性で勝敗を判断する関数
+        }
+        const myAttributes={
+            "バチンキー":"草",//1
+            "ドラパルト":"エスパー",
+            "ドータクン":"鋼",
+            "カラサリス":"草",
+            "マッギョ":"電気",//5
+            "マクノシタ":"かくとう",
+            "マッスグマ":"ノーマル",
+            "モンメン":"草",
+            "ピッピ":"エスパー",
+            "プロトーガ":"水",//10
+            "ランドロス":"かくとう",
+            "レックウザ":"ドラゴン",
+            "サンダー":"電気",
+            "ビクティニ":"炎",
+            "ヨワシ":"水"//15
+        };
         //画像が送信されたら呼ばれる関数
         async function sent() {
             console.log("success");
             const formData = new FormData(form)
             try{
-                const response= await fetch( "https://www.google.com",{
+                const response= await fetch( "/",{
                     method: "POST",
                     body: formData,
                     headers:{
@@ -21,12 +44,14 @@
                 });
                 
                 const answerElements = document.getElementsByClassName("answer");
-                const answerElement = document.getElementById("answer");
+                const pokeAnswerElement = document.getElementById("poke_answer");
 
                 //HTML要素を表示
-                answerElements.style.display=block;
+                Array.from(answerElements).forEach(element => {
+                    element.style.display = "block"; // 各要素を表示
+                });
 
-                const myPokeAttribute = myAttributes[answerElement.textContent];
+                const myPokeAttribute = myAttributes[pokeAnswerElement.textContent];
                 console.log(myPokeAttribute);
                 
             }catch(error){
@@ -58,11 +83,14 @@
             <input class="file_choose" type="file" name="file">
             <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
         </form>
-        <div>{{cloud_answer}}</div>
-        <div style="white-space:nowrap, diplay:none" class="answer">
-            これは 【  {{cloud_answer}}雲 】 です
-            <div style="display: inline;" id="answer">
-                一番似ているポケモンは 【{{poke_answer}} 】です
+        <div style="white-space:nowrap; display:block;" class="answer">
+            これは 【  {{ answer }}雲 】 です
+            <div style="display: inline;">
+                一番似ているポケモンは 【
+                <div style="display: inline;" id="poke_answer">
+                    {{ poke_answer }} 
+                </div>    
+                】です
             </div>
         </div>
         <img src="{{ image_path }}">
@@ -73,36 +101,9 @@
         <small>2022 h.s</small>   
     </footer>
     <script>
-        const attributes=[
-            "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
-        ];
-        function judge(attribute){
-            //属性で勝敗を判断する関数
-        }
-        const myAttributes={
-            "":"",//1
-            "":"",
-            "":"",
-            "":"",
-            "カラサリス":"ドラゴン",//5
-            "":"",
-            "":"",
-            "":"",
-            "":"",
-            "":"",//10
-            "":"",
-            "":"",
-            "":"",
-            "":"",
-            "":""//15
-        };
         //属性をランダムで選出
         const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
         document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;
-
-        // フォームの送信イベントを監視
-        const btn = document.getElementById("btn");
-        const form=document.getElementById("form");
 
         
     </script>
