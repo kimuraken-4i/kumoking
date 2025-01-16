@@ -6,7 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CloudShape</title>
     <link rel="stylesheet" href="./static/style.css">
-    
+    <script>
+        //画像が送信されたら呼ばれる関数
+        async function sent() {
+            console.log("success");
+            const formData = new FormData(form)
+            try{
+                const response= await fetch( "https://www.google.com",{
+                    method: "POST",
+                    body: formData,
+                    headers:{
+
+                    },
+                });
+                
+                const answerElements = document.getElementsByClassName("answer");
+                const answerElement = document.getElementById("answer");
+
+                //HTML要素を表示
+                answerElements.style.display=block;
+
+                const myPokeAttribute = myAttributes[answerElement.textContent];
+                console.log(myPokeAttribute);
+                
+            }catch(error){
+                console.error("Error",error);
+            }
+        }
+    </script>
 </head>
 <body>
     <header>   
@@ -27,9 +54,9 @@
         <br>
         -->
         <div id="mission"></div>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" id="form" enctype="multipart/form-data">
             <input class="file_choose" type="file" name="file">
-            <input class="btn" id="btn" value="! 判定 !" type="submit" onclick="sent();">
+            <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
         </form>
         <div>{{cloud_answer}}</div>
         <div style="white-space:nowrap, diplay:none" class="answer">
@@ -74,20 +101,10 @@
         document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;
 
         // フォームの送信イベントを監視
-        const form = document.getElementById("btn");
-        //画像が送信されたら呼ばれる関数
-        async function sent() {
-            console.log("success");
-            const answerElements = document.getElementsByClassName("answer");
-            const answerElement = document.getElementById("answer");
+        const btn = document.getElementById("btn");
+        const form=document.getElementById("form");
 
-            //HTML要素を表示
-            answerElements.style.display=block;
-            
-            const myPokeAttribute = myAttributes[answerElement.textContent];
-            console.log(myPokeAttribute);
-        }
-
+        
     </script>
 </body>
 </html>
