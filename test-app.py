@@ -12,10 +12,11 @@ pokes = ["ピッピ", "ドータクン", "カラサリス", "トラパルト", "
 image_size = 200
 image_resize = 300
 
-UPLOAD_FOLDER = "uploads"
+UPLOAD_FOLDER = "static"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__, static_folder="./uploads/")
+#app = Flask(__name__, static_folder="./uploads/")
+app = Flask(__name__, static_folder="./static/")
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -57,22 +58,22 @@ def upload_file():
             ans_per_poke = float(result_poke[predicted_poke])
 
             pred_answer = (
-            f"これは 【  {classes[predicted]}雲 】 です"
+            #f"これは 【  {classes[predicted]}雲 】 です"
             #"適合率は{accuracy_percentage:.2f}%です"
-            f"一番似ているポケモンは 【{pokes[predicted_poke]} 】です"
+            #f"一番似ているポケモンは 【{pokes[predicted_poke]} 】です"
             #"適合率は{accuracy_percentage_poke:.2f}%です"
-            f"カレントディレクトリは 【{os.getcwd()} 】です"
+            #f"カレントディレクトリは 【{os.getcwd()} 】です"
             )
-            poke_image ="./uploads/images/"+f"{pokes[predicted_poke]}.png"
+            poke_image ="./static/images/"+f"{pokes[predicted_poke]}.png"
   
-        return render_template("test-index.html",answer=pred_answer, image_path=poke_image)
+        return render_template("test-index.html",cloud_answer=classes[predicted],poke_answer=pokes[predicted_poke], image_path=poke_image)
 
     return render_template("test-index.html",answer="")
 
-@app.route('/uploads/<filename>')
+@app.route('/static/<filename>')
 def uploaded_file(filename):
     os.path.abspath(UPLOAD_FOLDER + filename)
-    return render_template("result.html", img="uploadss" + filename + ".png")
+    return render_template("test-index.html", img="uploadss" + filename + ".png")
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))
