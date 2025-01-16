@@ -7,57 +7,7 @@
     <title>CloudShape</title>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/style.css')}}">
     <script>
-        const attributes=[
-            "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
-        ];
-        function judge(attribute){
-            //属性で勝敗を判断する関数
-        }
-        const myAttributes={
-            "バチンキー":"草",//1
-            "ドラパルト":"エスパー",
-            "ドータクン":"鋼",
-            "カラサリス":"草",
-            "マッギョ":"電気",//5
-            "マクノシタ":"かくとう",
-            "マッスグマ":"ノーマル",
-            "モンメン":"草",
-            "ピッピ":"エスパー",
-            "プロトーガ":"水",//10
-            "ランドロス":"かくとう",
-            "レックウザ":"ドラゴン",
-            "サンダー":"電気",
-            "ビクティニ":"炎",
-            "ヨワシ":"水"//15
-        };
-        //画像が送信されたら呼ばれる関数
-        async function sent() {
-            console.log("success");
-            const formData = new FormData(form)
-            try{
-                const response= await fetch( "/",{
-                    method: "POST",
-                    body: formData,
-                    headers:{
-
-                    },
-                });
-                
-                const answerElements = document.getElementsByClassName("answer");
-                const pokeAnswerElement = document.getElementById("poke_answer");
-
-                //HTML要素を表示
-                Array.from(answerElements).forEach(element => {
-                    element.style.display = "block"; // 各要素を表示
-                });
-
-                const myPokeAttribute = myAttributes[pokeAnswerElement.textContent];
-                console.log(myPokeAttribute);
-                
-            }catch(error){
-                console.error("Error",error);
-            }
-        }
+        
     </script>
 </head>
 <body>
@@ -83,17 +33,8 @@
             <input class="file_choose" type="file" name="file">
             <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
         </form>
-        <div style="white-space:nowrap; display:block;" class="answer">
-            これは 【  {{ answer }}雲 】 です
-            <div style="display: inline;">
-                一番似ているポケモンは 【
-                <div style="display: inline;" id="poke_answer">
-                    {{ poke_answer }} 
-                </div>    
-                】です
-            </div>
-        </div>
-        <img src="{{ image_path }}">
+        <div id="response"></div>
+        <img src="{{ image_path }}" alt="関連ポケモンの画像">
         <!-- <img src="./static/images/マッギョ.png" alt="no pictures found"> -->
         
     </div>
@@ -102,10 +43,68 @@
     </footer>
     <script>
         //属性をランダムで選出
+        const attributes=[
+            "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
+        ];
+        function judge(attribute){
+            //属性で勝敗を判断する関数
+        }
+        const myAttributes={
+            "バチンキー":"草",//1
+            "ドラパルト":"エスパー",
+            "ドータクン":"鋼",
+            "カラサリス":"草",
+            "マッギョ":"電気",//5
+            "マクノシタ":"かくとう",
+            "マッスグマ":"ノーマル",
+            "モンメン":"草",
+            "ピッピ":"エスパー",
+            "プロトーガ":"水",//10
+            "ランドロス":"かくとう",
+            "レックウザ":"ドラゴン",
+            "サンダー":"電気",
+            "ビクティニ":"炎",
+            "ヨワシ":"水"//15
+        };
+        var resJson;
+
+        async function sent(){
+            const form = document.getElementById("form");
+            const formData = new FormData(form);
+            try{
+                const response = await fetch("/",{
+                    method:"POST",
+                    body: formData
+                });
+                if (!response.ok) {
+                    throw new Error(`レスポンスステータス: ${response.status}`);
+                }
+                resJson = await response.json();
+                console.log("calling")
+                console.log(resJson);
+                console.log("called")
+
+                //ポケモンの属性を抽出
+                const curPokeAttribute=myAttributes[resJson.poke_answer];
+                //HTML要素を生成
+                //resJson=JSON.parse(json);
+                document.getElementById('response').innerHTML = `
+                        <p>これは 【 ${resJson.cloud_answer} 雲 】 です</p>
+                        <p>一番似ているポケモンは 【 ${resJson.poke_answer} 】 で
+                        【 ${curPokeAttribute} 】属性です</p>
+                        <img src="${resJson.image_path}" alt="関連ポケモンの画像">
+                `;
+            }catch(error){
+                console.log("エラー");
+            }
+        }
+
+        //画像が送信されたら呼ばれる関数
+        console.log("start");
+
         const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
         document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;
 
-        
     </script>
 </body>
 </html>

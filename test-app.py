@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, render_template, flash, session
+from flask import Flask, request, redirect, render_template, flash, session, jsonify
 from werkzeug.utils import secure_filename
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.preprocessing import image
@@ -67,9 +67,12 @@ def upload_file():
             poke_image ="./static/images/"+f"{pokes[predicted_poke]}.png"
             #どのポケモンか、デフォルト値も設定
             poke_answer = pokes[predicted_poke] if predicted_poke < len(pokes) else "不明なポケモン"
+            print(classes[predicted])
             print(poke_answer)
-  
-        return render_template("test-index.html",answer=classes[predicted],poke_answer=poke_answer, image_path=poke_image)
+            print(poke_image)
+            
+        return jsonify({'cloud_answer': classes[predicted], 'poke_answer': poke_answer, 'image_path': poke_image})
+        #return render_template("test-index.html",cloud_answer="佐藤",poke_answer=poke_answer, image_path=poke_image)
 
     return render_template("test-index.html",answer="")
 
