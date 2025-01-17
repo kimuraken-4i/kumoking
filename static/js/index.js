@@ -1,26 +1,26 @@
 //属性をランダムで選出
 const attributes=[
-    "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
+    "ほのお","みず","くさ","でんき","ノーマル","エスパー","ドラゴン","はがね","かくとう"
 ];
 function judge(attribute){
     //属性で勝敗を判断する関数
 }
 const myAttributes={
-    "バチンキー":"草",//1
+    "バチンキー":"くさ",//1
     "ドラパルト":"エスパー",
-    "ドータクン":"鋼",
-    "カラサリス":"草",
-    "マッギョ":"電気",//5
+    "ドータクン":"はがね",
+    "カラサリス":"くさ",
+    "マッギョ":"でんき",//5
     "マクノシタ":"かくとう",
     "マッスグマ":"ノーマル",
-    "モンメン":"草",
+    "モンメン":"くさ",
     "ピッピ":"エスパー",
-    "プロトーガ":"水",//10
+    "プロトーガ":"みず",//10
     "ランドロス":"かくとう",
     "レックウザ":"ドラゴン",
-    "サンダー":"電気",
-    "ビクティニ":"炎",
-    "ヨワシ":"水"//15
+    "サンダー":"でんき",
+    "ビクティニ":"ほのお",
+    "ヨワシ":"みず"//15
 };
 
 const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
@@ -50,14 +50,20 @@ async function sent(){
         document.getElementById('response').innerHTML = `
                 <p>これは 【 ${resJson.cloud_answer} 雲 】 です</p>
                 <p>一番似ているポケモンは 【 ${resJson.poke_answer} 】 で
-                【 ${curPokeAttribute} 】属性です</p>
-                <p id="success" style="display:none;">ミッション達成！</p>
-                <p id="fail" style="display:none;">ミッション失敗...</p>
+                【 ${curPokeAttribute} 】タイプです</p>
+                <h2 id="success" style="display:none;">ミッション達成！</h2>
+                <h2 id="fail" style="display:none;">ミッション失敗...</h2>
                 <img src="${resJson.image_path}" alt="関連ポケモンの画像">
         `;
+        console.log(form);
         if(curPokeAttribute===randomAttribute){
+            //フォームを非表示
+            form.style.display="none";
+            document.getElementById("instruction").style.display="none";
+            //ミッション成功のセリフ
             document.getElementById("success").style.display="block";
         }else{
+            //ミッション失敗のセリフ
             document.getElementById("fail").style.display="block";
         }
     }catch(error){

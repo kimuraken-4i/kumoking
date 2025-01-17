@@ -42,6 +42,7 @@ p {
 
 form {
     text-align: center;
+    display: block;
 }
 
 footer {
