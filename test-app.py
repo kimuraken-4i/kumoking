@@ -22,7 +22,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 model = load_model('./model.h5')#学習済みモデルをロード
-model_poke = load_model('./model_poke.h5')
+model_poke = load_model('./model_poke15.h5')
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
