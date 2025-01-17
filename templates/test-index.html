@@ -12,99 +12,61 @@
 </head>
 <body>
     <header>   
-        <a class="header-logo">雲判別（6分類）</a>
+        <a class="header-logo">~ポケット<span id="kumo">雲</span>ンスター~</a>
     </header>
 
-    <div class="main">    
-        <h2> 選択された画像の雲の形をざっくりと識別します</h2>
-        <p>画像を選択して送信してください</p>
-        <!--
-        <br>
-        <p>【線状の雲＜巻雲：すじ雲＞】</p>
-        <p>【粒々の雲＜巻積雲：うろこ雲、高積雲：ひつじ雲＞】</p>
-        <p>【もくもくとした雲＜積乱雲：入道雲＞】</p>
-        <p>【ふわっとした雲＜積雲：わた雲＞】</p>
-        <p>【うろこ状の雲＜巻積雲：うろこ雲・いわし雲＞】</p>
-        <p>【霧状の雲＜積雲：きり雲＞】</p>
-        <br>
-        -->
-        <div id="mission"></div>
+    <div class="main">
+        <h2 id="mission"></h2>
+        <!-- 雲の説明と画像をリスト形式で表示 -->
+        <div class="cloud-list">
+            <div class="scroll-container">
+                <ul>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/sujigumo.jpg')}}" alt="巻雲 (すじ雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>線状の雲＜巻雲：すじ雲＞</strong></p>
+                        <p>巻雲は、空高くに浮かぶ細長い雲で、すじ状に並んでいます。高い場所にあるため、青空とよく映えます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/urokogumo.jpg')}}" alt="巻積雲 (うろこ雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>粒々の雲＜巻積雲：うろこ雲＞</strong></p>
+                        <p>巻積雲は、ウロコのように細かく分かれた雲です。比較的低い位置にあり、天気が崩れる前触れとして現れることがあります。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/nyudo.jpg')}}" alt="積乱雲 (入道雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>もくもくとした雲＜積乱雲：入道雲＞</strong></p>
+                        <p>積乱雲は、入道雲とも呼ばれ、雷雨や激しい天候の原因となる積み上がった雲です。高さがあり、夏の象徴です。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/watagumo.jpg')}}" alt="積雲 (わた雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>ふわっとした雲＜積雲：わた雲＞</strong></p>
+                        <p>積雲は、空に浮かぶ白くてふわっとした雲です。晴れた日の空に多く見られ、気持ちを和ませてくれます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/amagumo.jpg')}}" alt="乱層雲 (雨雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>うろこ状の雲＜巻積雲：いわし雲＞</strong></p>
+                        <p>いわし雲は、巻積雲の一種で、鰯（いわし）の群れのように、縦に並んだ雲です。高層に見られます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/kirigumo.jpg')}}" alt="積雲 (きり雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>霧状の雲＜積雲：きり雲＞</strong></p>
+                        <p>きり雲は、霧のように空を覆う雲で、視界が悪くなることがあります。低い場所に発生します。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p id="instruction">画像を選択して送信してください</p>
         <form method="POST" id="form" enctype="multipart/form-data">
             <input class="file_choose" type="file" name="file">
-            <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
+            <input class="btn" id="btn" value="GO" type="button" onclick="sent();">
         </form>
         <div id="response"></div>
-        <img src="{{ image_path }}" alt="関連ポケモンの画像">
+        <div id="result"></div>
+        <img src="{{ image_path }}" alt="">
         <!-- <img src="./static/images/マッギョ.png" alt="no pictures found"> -->
         
     </div>
-    <footer>
-        <small>2022 h.s</small>   
+    <footer> 
     </footer>
-    <script>
-        //属性をランダムで選出
-        const attributes=[
-            "ほのお","みず","くさ","かみなり","ノーマル","エスパー","ドラゴン","はがね","かくとう"
-        ];
-        function judge(attribute){
-            //属性で勝敗を判断する関数
-        }
-        const myAttributes={
-            "バチンキー":"草",//1
-            "ドラパルト":"エスパー",
-            "ドータクン":"鋼",
-            "カラサリス":"草",
-            "マッギョ":"電気",//5
-            "マクノシタ":"かくとう",
-            "マッスグマ":"ノーマル",
-            "モンメン":"草",
-            "ピッピ":"エスパー",
-            "プロトーガ":"水",//10
-            "ランドロス":"かくとう",
-            "レックウザ":"ドラゴン",
-            "サンダー":"電気",
-            "ビクティニ":"炎",
-            "ヨワシ":"水"//15
-        };
-        var resJson;
-
-        async function sent(){
-            const form = document.getElementById("form");
-            const formData = new FormData(form);
-            try{
-                const response = await fetch("/",{
-                    method:"POST",
-                    body: formData
-                });
-                if (!response.ok) {
-                    throw new Error(`レスポンスステータス: ${response.status}`);
-                }
-                resJson = await response.json();
-                console.log("calling")
-                console.log(resJson);
-                console.log("called")
-
-                //ポケモンの属性を抽出
-                const curPokeAttribute=myAttributes[resJson.poke_answer];
-                //HTML要素を生成
-                //resJson=JSON.parse(json);
-                document.getElementById('response').innerHTML = `
-                        <p>これは 【 ${resJson.cloud_answer} 雲 】 です</p>
-                        <p>一番似ているポケモンは 【 ${resJson.poke_answer} 】 で
-                        【 ${curPokeAttribute} 】属性です</p>
-                        <img src="${resJson.image_path}" alt="関連ポケモンの画像">
-                `;
-            }catch(error){
-                console.log("エラー");
-            }
-        }
-
-        //画像が送信されたら呼ばれる関数
-        console.log("start");
-
-        const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
-        document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;
-
-    </script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>
