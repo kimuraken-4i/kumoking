@@ -22,6 +22,9 @@ const myAttributes={
     "ビクティニ":"炎",
     "ヨワシ":"水"//15
 };
+
+const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
+document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;
 var resJson;
 
 async function sent(){
@@ -48,8 +51,15 @@ async function sent(){
                 <p>これは 【 ${resJson.cloud_answer} 雲 】 です</p>
                 <p>一番似ているポケモンは 【 ${resJson.poke_answer} 】 で
                 【 ${curPokeAttribute} 】属性です</p>
+                <p id="success" style="display:none;">ミッション達成！</p>
+                <p id="fail" style="display:none;">ミッション失敗...</p>
                 <img src="${resJson.image_path}" alt="関連ポケモンの画像">
         `;
+        if(curPokeAttribute===randomAttribute){
+            document.getElementById("success").style.display="block";
+        }else{
+            document.getElementById("fail").style.display="block";
+        }
     }catch(error){
         console.log("エラー");
     }
@@ -57,6 +67,3 @@ async function sent(){
 
 //画像が送信されたら呼ばれる関数
 console.log("start");
-
-const randomAttribute=attributes[Math.floor(Math.random()*(attributes.length))];
-document.getElementById("mission").textContent=`${randomAttribute}タイプのポケモンに似た雲の写真を撮ろう！`;

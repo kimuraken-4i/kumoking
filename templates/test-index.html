@@ -15,31 +15,20 @@
         <a class="header-logo">雲判別（6分類）</a>
     </header>
 
-    <div class="main">    
-        <h2> 選択された画像の雲の形をざっくりと識別します</h2>
+    <div class="main">
+        <h2 id="mission"></h2>
         <p>画像を選択して送信してください</p>
-        <!--
-        <br>
-        <p>【線状の雲＜巻雲：すじ雲＞】</p>
-        <p>【粒々の雲＜巻積雲：うろこ雲、高積雲：ひつじ雲＞】</p>
-        <p>【もくもくとした雲＜積乱雲：入道雲＞】</p>
-        <p>【ふわっとした雲＜積雲：わた雲＞】</p>
-        <p>【うろこ状の雲＜巻積雲：うろこ雲・いわし雲＞】</p>
-        <p>【霧状の雲＜積雲：きり雲＞】</p>
-        <br>
-        -->
-        <div id="mission"></div>
         <form method="POST" id="form" enctype="multipart/form-data">
             <input class="file_choose" type="file" name="file">
             <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
         </form>
         <div id="response"></div>
+        <div id="result"></div>
         <img src="{{ image_path }}" alt="関連ポケモンの画像">
         <!-- <img src="./static/images/マッギョ.png" alt="no pictures found"> -->
         
     </div>
-    <footer>
-        <small>2022 h.s</small>   
+    <footer> 
     </footer>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
