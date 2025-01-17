@@ -12,15 +12,52 @@
 </head>
 <body>
     <header>   
-        <a class="header-logo">雲判別（6分類）</a>
+        <a class="header-logo">~ポケット<span id="kumo">雲</span>ンスター~</a>
     </header>
 
     <div class="main">
         <h2 id="mission"></h2>
+        <!-- 雲の説明と画像をリスト形式で表示 -->
+        <div class="cloud-list">
+            <div class="scroll-container">
+                <ul>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/sujigumo.jpg')}}" alt="巻雲 (すじ雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>線状の雲＜巻雲：すじ雲＞</strong></p>
+                        <p>巻雲は、空高くに浮かぶ細長い雲で、すじ状に並んでいます。高い場所にあるため、青空とよく映えます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/urokogumo.jpg')}}" alt="巻積雲 (うろこ雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>粒々の雲＜巻積雲：うろこ雲＞</strong></p>
+                        <p>巻積雲は、ウロコのように細かく分かれた雲です。比較的低い位置にあり、天気が崩れる前触れとして現れることがあります。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/nyudo.jpg')}}" alt="積乱雲 (入道雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>もくもくとした雲＜積乱雲：入道雲＞</strong></p>
+                        <p>積乱雲は、入道雲とも呼ばれ、雷雨や激しい天候の原因となる積み上がった雲です。高さがあり、夏の象徴です。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/watagumo.jpg')}}" alt="積雲 (わた雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>ふわっとした雲＜積雲：わた雲＞</strong></p>
+                        <p>積雲は、空に浮かぶ白くてふわっとした雲です。晴れた日の空に多く見られ、気持ちを和ませてくれます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/amagumo.jpg')}}" alt="乱層雲 (雨雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>うろこ状の雲＜巻積雲：いわし雲＞</strong></p>
+                        <p>いわし雲は、巻積雲の一種で、鰯（いわし）の群れのように、縦に並んだ雲です。高層に見られます。</p>
+                    </li>
+                    <li class="cloud-item">
+                        <img src="{{url_for('static',filename='explain/kirigumo.jpg')}}" alt="積雲 (きり雲)" class="cloud-image" style="object-fit: fill; width: 400px; height: 200px;">
+                        <p><strong>霧状の雲＜積雲：きり雲＞</strong></p>
+                        <p>きり雲は、霧のように空を覆う雲で、視界が悪くなることがあります。低い場所に発生します。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <p id="instruction">画像を選択して送信してください</p>
         <form method="POST" id="form" enctype="multipart/form-data">
             <input class="file_choose" type="file" name="file">
-            <input class="btn" id="btn" value="! 判定 !" type="button" onclick="sent();">
+            <input class="btn" id="btn" value="GO" type="button" onclick="sent();">
         </form>
         <div id="response"></div>
         <div id="result"></div>
